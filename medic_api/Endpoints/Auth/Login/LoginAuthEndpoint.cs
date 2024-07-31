@@ -48,6 +48,9 @@ namespace medic_api.Endpoints.Auth.Login
                 return NotFound("Nemate privilegije admina");
             }
 
+            loginUserProfile.LastLoginDate = DateTime.Now;
+            await _applicationDbContext.SaveChangesAsync(cancellationToken);
+
             string randomString = TokenGenerator.Generate(10);
 
             var newToken = new AutentifikacijaToken()
@@ -60,7 +63,7 @@ namespace medic_api.Endpoints.Auth.Login
             _applicationDbContext.Add(newToken);
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
-            return Ok(new MyAuthInfo(newToken));
+            return Ok(newToken);
         }
     }
 }

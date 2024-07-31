@@ -15,7 +15,7 @@ namespace medic_api.Endpoints.Auth.Generate
             _applicationDbContext = applicationDbContext;
             _passwordHasher = passwordHasher;
         }
-        [HttpPost("generate-user")]
+        [HttpPost("generate-admin")]
         public override async Task<ActionResult<NoResponse>> Obradi([FromBody]GenerateAuthRequest request, CancellationToken cancellationToken = default)
         {
             if (request.Username == null || request.Name == null || request.Password == null)
@@ -33,10 +33,22 @@ namespace medic_api.Endpoints.Auth.Generate
                 LastLoginDate = DateTime.Now,
                 Password = hash,
                 Orders = 0,
-                Stuatus = "Active"
+                Status = "Active"
             };
+
+           
             _applicationDbContext.UserProfile.Add(user);
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
+
+            var role = new UserRole()
+            {
+                RolesId = 1,
+                UserProfileId = user.Id
+            };
+
+            _applicationDbContext.UserRole.Add(role);
+            await _applicationDbContext.SaveChangesAsync(cancellationToken);
+
             return Ok();
         }
     }
