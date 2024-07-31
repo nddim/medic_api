@@ -30,6 +30,20 @@ namespace medic_api.Helpers.Auth
 
             return new MyAuthInfo(autentifikacijaToken);
         }
+
+        public async Task<bool> IsAdmin()
+        {
+            var userProfile = GetAuthInfo().UserProfile;
+            if (userProfile == null)
+            {
+                return false;
+            }
+
+            var admin = await _applicationDbContext.UserRole
+                .Where(x => x.UserProfileId == userProfile.Id && x.RolesId == 1).ToListAsync();
+
+            return admin.Count > 0;
+        }
     }
 
     public class MyAuthInfo

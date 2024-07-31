@@ -1,10 +1,11 @@
 ﻿using medic_api.Data;
 using medic_api.Helpers;
+using medic_api.Helpers.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace medic_api.Endpoints.Users.GetById
 {
-
+    [MyAuthHandler("admin")]
     [Route("users")]
     public class UserGetByIdEndpoint:MyBaseEndpoint<int, UserGetByIdResponse>
     {

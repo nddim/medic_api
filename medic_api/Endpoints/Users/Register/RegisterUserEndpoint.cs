@@ -1,11 +1,13 @@
 ﻿using medic_api.Data;
 using medic_api.Data.Models;
 using medic_api.Helpers;
+using medic_api.Helpers.Auth;
 using medic_api.Helpers.PasswordHash;
 using Microsoft.AspNetCore.Mvc;
 
 namespace medic_api.Endpoints.Users.Register
 {
+    [MyAuthHandler("admin")]
     public class RegisterUserEndpoint:MyBaseEndpoint<RegisterUserRequest, NoResponse>
     {
 

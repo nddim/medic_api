@@ -1,9 +1,11 @@
 ﻿using medic_api.Data;
 using medic_api.Helpers;
+using medic_api.Helpers.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace medic_api.Endpoints.Users.BlockById
 {
+    [MyAuthHandler("admin")]
     public class BlockByIdEndpoint:MyBaseEndpoint<int, BlockByIdResponse>
     {
         private readonly ApplicationDbContext _applicationDbContext;

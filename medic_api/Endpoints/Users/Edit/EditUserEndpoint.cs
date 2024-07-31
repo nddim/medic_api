@@ -1,9 +1,11 @@
 ﻿using medic_api.Data;
 using medic_api.Helpers;
+using medic_api.Helpers.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace medic_api.Endpoints.Users.Edit
 {
+    [MyAuthHandler("admin")]
     public class EditUserEndpoint:MyBaseEndpoint<EditUserRequest, NoResponse>
     {
         private readonly ApplicationDbContext _applicationDbContext;

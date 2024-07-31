@@ -1,10 +1,12 @@
 ﻿using medic_api.Data;
 using medic_api.Helpers;
+using medic_api.Helpers.Auth;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace medic_api.Endpoints.Users.GetAll
 {
+    [MyAuthHandler("admin")]
     public class GetAllUsersEndpoint:MyBaseEndpoint<NoRequest, GetAllUsersResponse>
     {
         private readonly ApplicationDbContext _applicationDbContext;
