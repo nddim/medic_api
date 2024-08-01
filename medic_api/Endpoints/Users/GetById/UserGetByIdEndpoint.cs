@@ -1,6 +1,7 @@
 ﻿using medic_api.Data;
 using medic_api.Helpers;
 using medic_api.Helpers.Auth;
+using medic_api.Helpers.Image;
 using Microsoft.AspNetCore.Mvc;
 
 namespace medic_api.Endpoints.Users.GetById
@@ -10,10 +11,11 @@ namespace medic_api.Endpoints.Users.GetById
     public class UserGetByIdEndpoint:MyBaseEndpoint<int, UserGetByIdResponse>
     {
         private readonly ApplicationDbContext _applicationDbContext;
-
-        public UserGetByIdEndpoint(ApplicationDbContext applicationDbContext)
+        private IWebHostEnvironment _environment;
+        public UserGetByIdEndpoint(ApplicationDbContext applicationDbContext, IWebHostEnvironment environment)
         {
             _applicationDbContext = applicationDbContext;
+            _environment = environment;
         }
         [HttpGet("details/{Id}")]
         public override async Task<ActionResult<UserGetByIdResponse>> Obradi([FromRoute]int Id, CancellationToken cancellation = default)
@@ -23,7 +25,17 @@ namespace medic_api.Endpoints.Users.GetById
             {
                 return BadRequest("Nije pronaden user sa tim Id-om");
             }
-            return Ok(user);
+            return Ok(new UserGetByIdResponse()
+            {
+                Id =  user.Id,
+                Name = user.Name,
+                Username = user.Username,
+                Status = user.Status,
+                Orders = user.Orders,
+                SlikaUrl = FileHelper.GetImageByUser(user.SlikaUrl, _environment),
+                LastLoginDate = user.LastLoginDate,
+                DateOfBirth = user.DateOfBirth
+            });
         }
     }
 }

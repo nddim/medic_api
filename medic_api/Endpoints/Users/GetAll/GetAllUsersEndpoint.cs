@@ -17,7 +17,7 @@ namespace medic_api.Endpoints.Users.GetAll
         [HttpGet("users")]
         public override async Task<ActionResult<GetAllUsersResponse>> Obradi([FromQuery]NoRequest request, CancellationToken cancellation = default)
         {
-            var user = await _applicationDbContext.UserProfile.ToListAsync(cancellation);
+            var user = await _applicationDbContext.UserProfile.ToListAsync(cancellation); // .Where(x=>x.Status!="Blocked") u slucaju da ne zelimo prikazati blokirane usere
             if (user == null)
             {
                 return BadRequest("Nije pronaden user sa tim Id-om");
