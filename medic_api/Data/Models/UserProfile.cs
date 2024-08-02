@@ -11,6 +11,7 @@ namespace medic_api.Data.Models
         public string Username { get; set; }
         [JsonIgnore]
         public string Password { get; set; }
+        [Range(0,10)]
         public int Orders { get; set; }
         public DateTime LastLoginDate { get; set; }
         public string? SlikaUrl { get; set; }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace medic_api.Endpoints.Auth.Login
 {
-    public class LoginAuthEndpoint:MyBaseEndpoint<LoginAuthRequest, MyAuthInfo>
+    public class LoginAuthEndpoint:MyBaseEndpoint<LoginAuthRequest, LoginAuthResponse>
     {
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly IPasswordHasher _passwordHasher;
@@ -19,7 +19,7 @@ namespace medic_api.Endpoints.Auth.Login
             _passwordHasher = passwordHasher;
         }
         [HttpPost("login")]
-        public override async Task<ActionResult<MyAuthInfo>> Obradi([FromBody]LoginAuthRequest request, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<LoginAuthResponse>> Obradi([FromBody]LoginAuthRequest request, CancellationToken cancellationToken = default)
         {
             UserProfile? loginUserProfile =
                 await _applicationDbContext.UserProfile.FirstOrDefaultAsync(x => x.Username == request.Username,
@@ -27,14 +27,14 @@ namespace medic_api.Endpoints.Auth.Login
 
             if (loginUserProfile == null) // pogresan username
             {
-                return BadRequest(new MyAuthInfo(null));
+                return BadRequest();
             }
 
             var hashPassword = await _passwordHasher.Verify(loginUserProfile.Password, request.Password);
 
             if (!hashPassword)
             {
-                return Unauthorized(new MyAuthInfo(null));
+                return Unauthorized();
             }
 
             var roleIds = await _applicationDbContext.UserRole.Where(x => x.UserProfileId == loginUserProfile.Id)
@@ -63,7 +63,7 @@ namespace medic_api.Endpoints.Auth.Login
             _applicationDbContext.Add(newToken);
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 
-            return Ok(newToken);
+            return Ok(new LoginAuthResponse(newToken, true));
         }
     }
 }

@@ -58,4 +58,5 @@ namespace medic_api.Helpers.Auth
         public UserProfile? UserProfile => AutentifikacijaToken?.UserProfile;
         public bool IsLogiran => UserProfile !=null;
     }
+
 }
