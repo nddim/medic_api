@@ -26,7 +26,7 @@ namespace medic_api.Endpoints.Users.Register
         public override async Task<ActionResult<NoResponse>> Obradi([FromBody]RegisterUserRequest request, CancellationToken cancellation = default)
         {
             if (request.Name == null || request.Username == null || request.Password == null ||
-                request.Orders == null || request.DateOfBirth == null)
+                request.Orders == null || request.DateOfBirth == null || request.Name == "" || request.Username == "" || request.Password == "")
             {
                 return BadRequest("Nisu uneseni svi podaci");
             }
@@ -49,7 +49,7 @@ namespace medic_api.Endpoints.Users.Register
                 byte[] byteArray = Convert.FromBase64String(request.SlikaUrl.Split(',')[1]);
 
                 string fileName = Guid.NewGuid().ToString() + "." + FileHelper.GetImageTypeFromBase64(request.SlikaUrl);
-                string envFile = _environment.WebRootPath + "\\Uploads\\Images" + fileName;
+                string envFile = _environment.WebRootPath + "\\Uploads\\Images\\" + fileName;
 
                 await System.IO.File.WriteAllBytesAsync(envFile, byteArray);
 

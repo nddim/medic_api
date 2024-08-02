@@ -44,7 +44,7 @@ namespace medic_api.Migrations
 
                     b.HasIndex("UserProfileId");
 
-                    b.ToTable("AutentifikacijaToken");
+                    b.ToTable("AutentifikacijaToken", (string)null);
                 });
 
             modelBuilder.Entity("medic_api.Data.Models.Roles", b =>
@@ -61,7 +61,7 @@ namespace medic_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("medic_api.Data.Models.UserProfile", b =>
@@ -102,7 +102,7 @@ namespace medic_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserProfile");
+                    b.ToTable("UserProfile", (string)null);
                 });
 
             modelBuilder.Entity("medic_api.Data.Models.UserRole", b =>
@@ -125,7 +125,7 @@ namespace medic_api.Migrations
 
                     b.HasIndex("UserProfileId");
 
-                    b.ToTable("UserRole");
+                    b.ToTable("UserRole", (string)null);
                 });
 
             modelBuilder.Entity("medic_api.Data.Models.AutentifikacijaToken", b =>

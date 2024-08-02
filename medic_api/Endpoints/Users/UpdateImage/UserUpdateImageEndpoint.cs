@@ -3,10 +3,11 @@ using medic_api.Helpers;
 using medic_api.Helpers.Image;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
+using medic_api.Helpers.Auth;
 
 namespace medic_api.Endpoints.Users.UpdateImage
 {
-    
+    [MyAuthHandler("admin")]
     public class UserUpdateImageEndpoint:MyBaseEndpoint<UserUpdateImageRequest, NoResponse>
     {
         private readonly ApplicationDbContext _applicationDbContext;

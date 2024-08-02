@@ -22,8 +22,7 @@ namespace medic_api.Endpoints.Users.Edit
                 return BadRequest($"Nema usera sa Id {request.Id} ");
             }
 
-            if (request.Name == null || request.Username == null || request.DateOfBirth == null ||
-                request.Status == null || request.Orders == 0)
+            if (request.Name == null || request.Name=="" || request.Username=="" || request.Username == null || request.DateOfBirth == null || request.Orders==null)
             {
                 return BadRequest("Nisu unijeti podaci");
             }
